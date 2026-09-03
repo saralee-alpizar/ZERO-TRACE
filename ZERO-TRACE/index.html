@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="ZERO TRACE permite identificar y eliminar metadatos ocultos de fotografías."
+    >
+
+    <title>ZERO TRACE | Analiza tus fotografías</title>
+
+    <!-- Archivo de estilos -->
+    <link rel="stylesheet" href="css/estilos.css">
+
+    <!-- Librería para leer metadatos EXIF reales -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/exifr/dist/full.umd.js"
+        defer
+    ></script>
+
+    <!-- Archivo JavaScript del proyecto -->
+    <script src="js/app.js" defer></script>
+</head>
+
+<body>
+
+    <!-- Barra superior -->
+    <header class="encabezado">
+        <a href="#" class="marca" id="logoInicio">
+            <span class="marca-icono" aria-hidden="true">◉</span>
+
+            <span>
+                <strong>ZERO TRACE </strong>
+                <small>Protección de metadatos</small>
+            </span>
+        </a>
+
+        <nav class="navegacion" aria-label="Navegación principal">
+            <button class="nav-boton activo" id="navAnalizar" type="button">
+                Analizar imagen
+            </button>
+
+            <button class="nav-boton" id="navInformacion" type="button">
+                ¿Qué son los metadatos?
+            </button>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- =====================================================
+             PANTALLA 1: ANALIZAR LA IMAGEN
+        ====================================================== -->
+        <section class="pantalla activa" id="pantallaAnalisis">
+
+            <div class="introduccion">
+                <span class="etiqueta">Privacidad digital</span>
+
+                <h1>Descubre qué información oculta contiene tu fotografía</h1>
+
+                <p>
+                    Sube una imagen para revisar sus metadatos. El análisis se
+                    realiza en tu navegador y te mostrará únicamente los datos
+                    que realmente puedan detectarse.
+                </p>
+            </div>
+
+            <div class="zona-trabajo">
+
+                <!-- Panel izquierdo: cargar y mostrar imagen -->
+                <section class="panel panel-imagen">
+                    <div class="panel-encabezado">
+                        <div>
+                            <p class="numero-paso">PASO 1</p>
+                            <h2>Sube una imagen</h2>
+                        </div>
+
+                        <span class="estado" id="estadoImagen">
+                            Sin imagen
+                        </span>
+                    </div>
+
+                    <!-- Zona para seleccionar o arrastrar -->
+                    <label class="zona-carga" id="zonaCarga" for="entradaImagen">
+                        <span class="icono-carga" aria-hidden="true">↑</span>
+
+                        <strong>Selecciona una fotografía</strong>
+
+                        <span>
+                            También puedes arrastrarla hasta esta zona
+                        </span>
+
+                        <small>
+                            Formatos compatibles: JPG, JPEG, PNG, WEBP y TIFF
+                        </small>
+                    </label>
+
+                    <input
+                        type="file"
+                        id="entradaImagen"
+                        accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"                        hidden
+                    >
+
+                    <!-- Vista previa -->
+                    <div class="contenedor-vista-previa" id="contenedorVistaPrevia" hidden>
+                        <img
+                            id="vistaPrevia"
+                            src=""
+                            alt="Vista previa de la fotografía seleccionada"
+                        >
+
+                        <div class="datos-archivo">
+                            <strong id="nombreArchivo">Nombre de la imagen</strong>
+                            <span id="detalleArchivo">Tamaño y formato</span>
+                        </div>
+
+                        <button
+                            class="boton-secundario"
+                            id="botonCambiarImagen"
+                            type="button"
+                        >
+                            Cambiar imagen
+                        </button>
+                    </div>
+
+                    <button
+                        class="boton-principal"
+                        id="botonAnalizar"
+                        type="button"
+                        disabled
+                    >
+                        Mostrar datos ocultos
+                    </button>
+
+                    <p class="mensaje-error" id="mensajeError" role="alert"></p>
+                </section>
+
+                <!-- Panel derecho: resultados -->
+                <section class="panel panel-resultados">
+                    <div class="panel-encabezado">
+                        <div>
+                            <p class="numero-paso">PASO 2</p>
+                            <h2>Reporte de privacidad</h2>
+                        </div>
+
+                        <span class="estado neutro" id="estadoAnalisis">
+                            Pendiente
+                        </span>
+                    </div>
+
+                    <!-- Aparece antes del análisis -->
+                    <div class="estado-vacio" id="estadoVacio">
+                        <span class="escudo" aria-hidden="true">◇</span>
+
+                        <h3>Aún no hay resultados</h3>
+
+                        <p>
+                            Selecciona una fotografía y presiona
+                            “Mostrar datos ocultos”.
+                        </p>
+                    </div>
+
+                    <!-- Aparece mientras se analiza -->
+                    <div class="estado-cargando" id="estadoCargando" hidden>
+                        <div class="cargador"></div>
+                        <p>Buscando metadatos en la imagen…</p>
+                    </div>
+
+                    <!-- Aparece después del análisis -->
+                    <div class="resultados" id="resultados" hidden>
+
+                        <div class="resumen-riesgo" id="resumenRiesgo">
+                            <div>
+                                <span>Nivel general</span>
+                                <strong id="nivelGeneral">Sin determinar</strong>
+                            </div>
+
+                            <p id="descripcionGeneral">
+                                El nivel dependerá de los datos encontrados.
+                            </p>
+                        </div>
+
+                        <div class="seccion-resultados">
+                            <h3>Datos detectados</h3>
+
+                            <!-- JavaScript colocará aquí los metadatos reales -->
+                            <div class="lista-metadatos" id="listaMetadatos"></div>
+                        </div>
+
+                        <div class="seccion-resultados">
+                            <h3>Riesgos encontrados</h3>
+
+                            <!-- JavaScript colocará aquí los mensajes de riesgo -->
+                            <div class="lista-riesgos" id="listaRiesgos"></div>
+                        </div>
+
+                        <div class="aviso-veracidad">
+                            <strong>Acerca del análisis</strong>
+
+                            <p id="avisoAnalisis">
+                                El reporte distingue entre metadatos EXIF,
+                                características normales del archivo y datos que
+                                el navegador no puede verificar.
+                            </p>
+                        </div>
+
+                        <button
+                            class="boton-peligro"
+                            id="botonIrLimpiar"
+                            type="button"
+                        >
+                            Quiero borrar los metadatos
+                        </button>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             PANTALLA 2: ELIMINAR METADATOS
+        ====================================================== -->
+        <section class="pantalla" id="pantallaLimpieza" hidden>
+
+            <button class="boton-volver" id="botonVolver" type="button">
+                ← Volver al reporte
+            </button>
+
+            <div class="introduccion introduccion-limpieza">
+                <span class="etiqueta">Limpieza de privacidad</span>
+                <h1>Elimina los metadatos de tu fotografía</h1>
+
+                <p>
+                    Crearemos una copia nueva de la imagen. El archivo original
+                    permanecerá sin modificaciones.
+                </p>
+            </div>
+
+            <div class="zona-limpieza">
+
+                <section class="panel">
+                    <p class="numero-paso">IMAGEN ORIGINAL</p>
+                    <h2>Antes de la limpieza</h2>
+
+                    <div class="comparacion-imagen">
+                        <img
+                            id="imagenOriginalLimpieza"
+                            src=""
+                            alt="Fotografía original antes de eliminar metadatos"
+                        >
+                    </div>
+
+                    <div class="resumen-original" id="resumenOriginal">
+                        <span id="cantidadMetadatos">
+                            0 metadatos detectados
+                        </span>
+                    </div>
+                </section>
+
+                <section class="panel panel-limpiar">
+                    <p class="numero-paso">PASO 3</p>
+                    <h2>Crear una copia limpia</h2>
+
+                    <div class="escudo-grande" aria-hidden="true">✓</div>
+
+                    <p>
+                        Al continuar, el sitio procesará la imagen y generará
+                        una nueva copia sin los metadatos compatibles.
+                    </p>
+
+                    <button
+                        class="boton-peligro"
+                        id="botonBorrarMetadatos"
+                        type="button"
+                    >
+                        Borrar metadatos
+                    </button>
+
+                    <div class="resultado-limpieza" id="resultadoLimpieza" hidden>
+                        <strong>¡Copia procesada!</strong>
+
+                        <p id="mensajeLimpieza">
+                            La imagen está lista para descargarse y verificarse.
+                        </p>
+
+                        <div class="acciones-limpieza">
+                            <button
+                                class="boton-principal"
+                                id="botonDescargar"
+                                type="button"
+                            >
+                                Descargar imagen limpia
+                            </button>
+
+                            <button
+                                class="boton-secundario"
+                                id="botonProbarLimpia"
+                                type="button"
+                            >
+                                Analizar la copia limpia
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             INFORMACIÓN EDUCATIVA
+        ====================================================== -->
+        <section class="pantalla" id="pantallaInformacion" hidden>
+
+            <button class="boton-volver" id="botonVolverInformacion" type="button">
+                ← Volver al analizador
+            </button>
+
+            <div class="introduccion">
+                <span class="etiqueta">Aprende a protegerte</span>
+                <h1>¿Qué son los metadatos?</h1>
+
+                <p>
+                    Son datos que pueden almacenarse dentro de una fotografía,
+                    como la fecha, la cámara utilizada, la configuración de
+                    captura y, en algunos casos, las coordenadas GPS.
+                </p>
+            </div>
+
+            <div class="tarjetas-educativas">
+                <article class="tarjeta-educativa">
+                    <span aria-hidden="true">⌖</span>
+                    <h2>Ubicación</h2>
+                    <p>
+                        Algunas fotografías pueden guardar el lugar exacto
+                        donde fueron tomadas.
+                    </p>
+                </article>
+
+                <article class="tarjeta-educativa">
+                    <span aria-hidden="true">◷</span>
+                    <h2>Fecha y hora</h2>
+                    <p>
+                        Estos datos pueden contribuir a identificar actividades,
+                        horarios o rutinas.
+                    </p>
+                </article>
+
+                <article class="tarjeta-educativa">
+                    <span aria-hidden="true">▣</span>
+                    <h2>Dispositivo</h2>
+                    <p>
+                        La marca, el modelo y el software pueden complementar
+                        un perfil sobre el propietario.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="pie-pagina">
+        <strong>ZERO TRACE</strong>
+        <span>Proyecto de concientización sobre privacidad digital</span>
+    </footer>
+
+</body>
+</html>
