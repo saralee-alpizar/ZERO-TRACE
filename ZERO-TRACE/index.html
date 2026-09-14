@@ -139,6 +139,41 @@
                     </button>
 
                     <p class="mensaje-error" id="mensajeError" role="alert"></p>
+
+                    <!-- Riesgos encontrados debajo de la imagen -->
+<div class="seccion-riesgos" id="seccionRiesgos" hidden>
+
+    <h3>Riesgos encontrados</h3>
+
+    <div class="grafico-riesgos">
+
+        <!-- Niveles escritos del gráfico -->
+        <div class="niveles-grafico" aria-hidden="true">
+            <span>Alto</span>
+            <span>Medio</span>
+            <span>Bajo/Medio</span>
+            <span>Bajo</span>
+        </div>
+
+        <!-- JavaScript colocará aquí las barras reales -->
+        <div
+            class="lista-riesgos"
+            id="listaRiesgos"
+            aria-label="Gráfico de los riesgos encontrados"
+        ></div>
+
+    </div>
+
+    <button
+        class="boton-peligro"
+        id="botonIrLimpiar"
+        
+        type="button"
+    >
+        Quiero borrar los metadatos
+    </button>
+
+</div>
                 </section>
 
                 <!-- Panel derecho: resultados -->
@@ -193,12 +228,7 @@
                             <div class="lista-metadatos" id="listaMetadatos"></div>
                         </div>
 
-                        <div class="seccion-resultados">
-                            <h3>Riesgos encontrados</h3>
-
-                            <!-- JavaScript colocará aquí los mensajes de riesgo -->
-                            <div class="lista-riesgos" id="listaRiesgos"></div>
-                        </div>
+                       
 
                         <div class="aviso-veracidad">
                             <strong>Acerca del análisis</strong>
@@ -210,13 +240,7 @@
                             </p>
                         </div>
 
-                        <button
-                            class="boton-peligro"
-                            id="botonIrLimpiar"
-                            type="button"
-                        >
-                            Quiero borrar los metadatos
-                        </button>
+                      
                     </div>
                 </section>
             </div>
@@ -313,52 +337,255 @@
         <!-- =====================================================
              INFORMACIÓN EDUCATIVA
         ====================================================== -->
-        <section class="pantalla" id="pantallaInformacion" hidden>
+       <!-- =====================================================
+     PANTALLA 3: INFORMACIÓN EDUCATIVA
+====================================================== -->
+<section class="pantalla" id="pantallaInformacion" hidden>
 
-            <button class="boton-volver" id="botonVolverInformacion" type="button">
-                ← Volver al analizador
-            </button>
+    <button
+        class="boton-volver"
+        id="botonVolverInformacion"
+        type="button"
+    >
+        ← Volver al analizador
+    </button>
 
-            <div class="introduccion">
-                <span class="etiqueta">Aprende a protegerte</span>
-                <h1>¿Qué son los metadatos?</h1>
+    <div class="introduccion">
+        <span class="etiqueta">
+            Aprende a protegerte
+        </span>
+
+        <h1>¿Qué son los metadatos?</h1>
+
+        <p>
+            Los metadatos son datos que describen una fotografía.
+            Pueden guardar información sobre el dispositivo, la fecha,
+            la configuración de la cámara y, en algunos casos, el lugar
+            exacto donde fue tomada.
+        </p>
+    </div>
+
+
+    <!-- Explicación principal -->
+
+    <section class="bloque-educativo">
+        <div class="texto-educativo">
+
+            <p class="numero-paso">
+                INFORMACIÓN OCULTA
+            </p>
+
+            <h2>Una fotografía puede revelar más de lo que ves</h2>
+
+            <p>
+                Cuando observamos una imagen solamente vemos sus
+                píxeles, pero el archivo puede contener información
+                adicional que no aparece directamente en la fotografía.
+            </p>
+
+            <p>
+                Estos datos pueden ser útiles para organizar imágenes,
+                pero también podrían afectar la privacidad si se
+                comparten sin revisarlos.
+            </p>
+        </div>
+
+        <div class="ejemplo-metadatos">
+            <span>📍 Ubicación GPS</span>
+            <span>📅 Fecha de captura</span>
+            <span>🕐 Hora de captura</span>
+            <span>📱 Modelo del dispositivo</span>
+            <span>⚙️ Configuración de cámara</span>
+            <span>✍️ Autor o descripción</span>
+        </div>
+    </section>
+
+
+    <!-- Tipos de metadatos -->
+
+    <div class="titulo-seccion">
+        <p class="numero-paso">DATOS FRECUENTES</p>
+        <h2>¿Qué información puede contener una imagen?</h2>
+    </div>
+
+    <div class="tarjetas-educativas">
+
+        <article class="tarjeta-educativa">
+            <span aria-hidden="true">⌖</span>
+
+            <h2>Ubicación</h2>
+
+            <p>
+                Las coordenadas GPS pueden indicar el lugar exacto
+                donde se tomó una fotografía.
+            </p>
+        </article>
+
+        <article class="tarjeta-educativa">
+            <span aria-hidden="true">◷</span>
+
+            <h2>Fecha y hora</h2>
+
+            <p>
+                Pueden ayudar a establecer cuándo ocurrió una actividad
+                y contribuir a identificar rutinas.
+            </p>
+        </article>
+
+        <article class="tarjeta-educativa">
+            <span aria-hidden="true">▣</span>
+
+            <h2>Dispositivo</h2>
+
+            <p>
+                La marca, el modelo, el lente y el software pueden
+                describir el equipo utilizado.
+            </p>
+        </article>
+
+        <article class="tarjeta-educativa">
+            <span aria-hidden="true">⚙</span>
+
+            <h2>Configuración</h2>
+
+            <p>
+                Incluye datos técnicos como ISO, apertura, flash,
+                exposición y distancia focal.
+            </p>
+        </article>
+
+        <article class="tarjeta-educativa">
+            <span aria-hidden="true">✎</span>
+
+            <h2>Autor y descripción</h2>
+
+            <p>
+                Algunos archivos pueden contener nombres, comentarios,
+                derechos de autor o descripciones.
+            </p>
+        </article>
+
+        <article class="tarjeta-educativa">
+            <span aria-hidden="true">↻</span>
+
+            <h2>Modificaciones</h2>
+
+            <p>
+                Pueden aparecer fechas de edición, programas utilizados
+                y otros datos relacionados con el origen del archivo.
+            </p>
+        </article>
+
+    </div>
+
+
+    <!-- Niveles de riesgo -->
+
+    <section class="seccion-educativa">
+        <div class="titulo-seccion">
+            <p class="numero-paso">
+                NIVELES DE PRIVACIDAD
+            </p>
+
+            <h2>¿Cómo clasifica ZERO TRACE los riesgos?</h2>
+        </div>
+
+        <div class="niveles-educativos">
+
+            <article class="nivel-educativo riesgo-alto">
+                <strong>🔴 Riesgo alto</strong>
 
                 <p>
-                    Son datos que pueden almacenarse dentro de una fotografía,
-                    como la fecha, la cámara utilizada, la configuración de
-                    captura y, en algunos casos, las coordenadas GPS.
+                    Información como las coordenadas GPS puede revelar
+                    lugares relacionados contigo.
                 </p>
-            </div>
+            </article>
 
-            <div class="tarjetas-educativas">
-                <article class="tarjeta-educativa">
-                    <span aria-hidden="true">⌖</span>
-                    <h2>Ubicación</h2>
-                    <p>
-                        Algunas fotografías pueden guardar el lugar exacto
-                        donde fueron tomadas.
-                    </p>
-                </article>
+            <article class="nivel-educativo riesgo-medio">
+                <strong>🟠 Riesgo medio</strong>
 
-                <article class="tarjeta-educativa">
-                    <span aria-hidden="true">◷</span>
-                    <h2>Fecha y hora</h2>
-                    <p>
-                        Estos datos pueden contribuir a identificar actividades,
-                        horarios o rutinas.
-                    </p>
-                </article>
+                <p>
+                    Fechas, horas, descripciones o datos de autor pueden
+                    ayudar a reconstruir actividades o identidades.
+                </p>
+            </article>
 
-                <article class="tarjeta-educativa">
-                    <span aria-hidden="true">▣</span>
-                    <h2>Dispositivo</h2>
-                    <p>
-                        La marca, el modelo y el software pueden complementar
-                        un perfil sobre el propietario.
-                    </p>
-                </article>
-            </div>
-        </section>
+            <article class="nivel-educativo riesgo-variable">
+                <strong>🟡 Riesgo variable</strong>
+
+                <p>
+                    El impacto depende del contenido y de cómo se combine
+                    con otros datos.
+                </p>
+            </article>
+
+            <article class="nivel-educativo riesgo-bajo">
+                <strong>🟢 Riesgo bajo</strong>
+
+                <p>
+                    La resolución o la configuración de cámara suelen
+                    tener poco impacto por sí solas.
+                </p>
+            </article>
+
+        </div>
+    </section>
+
+
+    <!-- Recomendaciones -->
+
+    <section class="seccion-educativa">
+        <div class="titulo-seccion">
+            <p class="numero-paso">
+                PROTÉGETE
+            </p>
+
+            <h2>Antes de compartir una fotografía</h2>
+        </div>
+
+        <ol class="lista-recomendaciones">
+            <li>
+                <strong>Revisa la ubicación.</strong>
+                Comprueba si la fotografía contiene coordenadas GPS.
+            </li>
+
+            <li>
+                <strong>Observa el nombre del archivo.</strong>
+                Evita nombres que revelen personas, lugares o actividades.
+            </li>
+
+            <li>
+                <strong>Elimina los metadatos.</strong>
+                Crea una copia limpia antes de publicar o enviar la imagen.
+            </li>
+
+            <li>
+                <strong>Verifica el resultado.</strong>
+                Analiza nuevamente la copia para comprobar los datos
+                restantes.
+            </li>
+
+            <li>
+                <strong>Conserva el archivo original.</strong>
+                Trabaja siempre con una copia para evitar perder información.
+            </li>
+        </ol>
+    </section>
+
+
+    <!-- Aclaración -->
+
+    <aside class="nota-privacidad">
+        <strong>Tu fotografía se procesa en el navegador</strong>
+
+        <p>
+            ZERO TRACE analiza y procesa la imagen en el dispositivo
+            del usuario. El prototipo no necesita guardar la fotografía
+            en una cuenta ni enviarla a una base de datos.
+        </p>
+    </aside>
+
+</section>
 
     </main>
 
